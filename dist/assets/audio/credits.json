@@ -1,0 +1,62 @@
+{
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "sources": [
+    {
+      "name": "page-1",
+      "author": "OwlStorm",
+      "id": "151220",
+      "url": "https://freesound.org/people/OwlStorm/sounds/151220/",
+      "preview": "https://cdn.freesound.org/previews/151/151220_140737-hq.mp3",
+      "licenses": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "bytes": 15603
+    },
+    {
+      "name": "page-2",
+      "author": "OwlStorm",
+      "id": "151221",
+      "url": "https://freesound.org/people/OwlStorm/sounds/151221/",
+      "preview": "https://cdn.freesound.org/previews/151/151221_140737-hq.mp3",
+      "licenses": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "bytes": 43518
+    },
+    {
+      "name": "pages",
+      "author": "OwlStorm",
+      "id": "320148",
+      "url": "https://freesound.org/people/OwlStorm/sounds/320148/",
+      "preview": "https://cdn.freesound.org/previews/320/320148_140737-hq.mp3",
+      "licenses": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "bytes": 222701
+    },
+    {
+      "name": "cup",
+      "author": "kikuchiyo",
+      "id": "214848",
+      "url": "https://freesound.org/people/kikuchiyo/sounds/214848/",
+      "preview": "https://cdn.freesound.org/previews/214/214848_2528670-hq.mp3",
+      "licenses": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "bytes": 60048
+    },
+    {
+      "name": "voices",
+      "author": "SpliceSound",
+      "id": "260121",
+      "url": "https://freesound.org/people/SpliceSound/sounds/260121/",
+      "preview": "https://cdn.freesound.org/previews/260/260121_1480854-hq.mp3",
+      "licenses": [
+        "http://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "bytes": 589824
+    }
+  ],
+  "changes": "Downloaded public MP3 previews; converted to mono 24 kHz PCM WAV; trimmed, DC removed, filtered, normalized, faded. Charging chime and noise bed are original synthesis, not recordings."
+}

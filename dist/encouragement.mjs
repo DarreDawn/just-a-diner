@@ -1,4 +1,4 @@
-import { pools } from './prompts.mjs';
+import { pools, extraPrompts } from './prompts.mjs';
 // One contextual compliment for each existing prompt; prompt selection stays unchanged.
 export const compliments = {
  rest: [
@@ -11,19 +11,200 @@ export const compliments = {
  '水豚补充：刚才这位顾客干得漂亮。', '徽章虽然没用，你刚才的专注倒是货真价实。', '小饼干还在烤，你这段专注已经很香了。', '树没意见，后厨有：刚才那段做得不错。', '隐藏成就是真的，你这一小轮挺牛逼。', '鸭子不催，但鸭子要夸：厉害。', '客服另外备注：刚才那段投入很给力。', '云负责休息，你负责过的那段专注很可以。', '松弛随机掉落，这一小轮的认真可是你自己挣的。', '月亮运费另算，你刚才的表现后厨免费夸。', '土豆的合伙申请待审，你这一小轮先给好评。', '土豆没白欢呼，刚才那段你干得确实不错。', '空气没有营养，但这句夸奖有根据：你认真了一段。', '海豹可以躺，你刚才的努力已经算数了。', '猫负责胡闹，你刚才负责专注，分工很牛逼。', '拥抱免费附赠，顺便夸一句：刚才做得漂亮。', '蜗牛审核很慢，但你这段专注值得它点个赞。', '赞助商另有留言：这一小轮你挺厉害。', '勺子休假不妨碍后厨夸你：刚才那段很扎实。', '煎饼不能报销，你的专注可以被认真夸一下。', '香菜行踪保密，你这一小轮很给力倒不用保密。', '冰块的事先不管，企鹅说你刚才挺牛逼。', '券过期了，夸奖没过期：刚才干得不错。', '剧场暂时散场，给认真坐到这里的你鼓个掌。', '蘑菇不想被炒，但愿意为你这一小轮鼓掌。', '附件没有，夸奖有：这段专注很厉害。', '星星伸它的懒腰，你这一小轮值得一句漂亮。', '咖啡身份存疑，你刚才认真投入这件事没疑问。', '鸭叫可以免单，你刚才那段专注我真心给好评。', '米粒座位还没排好，你倒是已经认真了一小轮。'
  ]
 };
-const phasePraise = [
- ['开场这段已经拿下。后厨给你一个响亮的“厉害”。', '第一段火候不错。牛逼，已经进入状态了。', '起步就投入了这么一段时间，做得不错。'],
- ['已经走到中场了，这份持续投入很厉害。', '这锅已经煮了好一会儿，你也坚持了好一会儿。牛逼。', '中场盖个章：这段耐心，后厨服气。'],
- ['已经进入收尾阶段了，能做到这会儿，真挺牛逼。', '这一单快出锅了。能投入到这里，厉害。', '后厨准备摆盘了，你这一路的专注值得认真夸一下。']
+
+// 新提示的夸奖同时加入原有列表，保持提示与夸奖数量一致。
+for (const type of Object.keys(extraPrompts)) {
+  compliments[type].push(
+    ...extraPrompts[type].map(item => item.praise[0])
+  );
+}
+
+const typePraise = {
+  rest: [
+    '刚才那段做完了。牛逼，现在休息也算正经安排。',
+    '这一小轮拿下。后厨给你放行，不用补交证明。',
+    '挺可以的。接下来这点空白不用填满。',
+    '厉害。现在允许大脑把围裙摘一下。',
+    '干得不错。休息券当场生效，不设使用门槛。',
+    '后厨已记账：一段时间，一句好评。现在歇着。'
+  ],
+
+  reflect: [
+    '不必当场答对。肯回来瞄一眼，就挺有办法。',
+    '想到哪儿算哪儿。脑子不是扫码枪，不必秒出结果。',
+    '问号留着也行。这一段已经干完，先记你一笔。',
+    '厉害。能发现哪里还不清楚，也是一种清楚。',
+    '会停下来检查，挺会做事。答案允许晚点上桌。',
+    '不必把思路摆成宴席。有一点能用的就很好。'
+  ],
+
+  surprise: [
+    '后厨一致认为：可以啊你。洗碗池也没有异议。',
+    '牛逼。此评价由一群没有资质的餐具联合签发。',
+    '刚才那段挺漂亮。主厨高兴得把帽子戴反了。',
+    '厉害。你的好评已送达，配送员是一片生菜。',
+    '本店不卖成功学，但这句“干得不错”免费。',
+    '这一小轮记账成功。零钱找你三声精神上的掌声。'
+  ]
+};
+
+// 给旧提示提供额外的语境版本。
+// 没匹配到关键词时，使用对应类别的夸奖。
+const contextRules = [
+  {
+    match: /眼|视线|屏幕|看远|最远|抬头|光落|颜色/,
+    texts: [
+      '眼睛刚才也出了力。干得漂亮，现在给它换个景。',
+      '厉害。屏幕可以暂时失宠，你的进度不会吃醋。',
+      '这一段记下了。让视线出去串个门，不用带伴手礼。'
+    ]
+  },
+  {
+    match: /肩膀|脖子|坐姿|姿势|懒腰|脚掌/,
+    texts: [
+      '这一段辛苦了。身体可以重新摆盘，不必保持出厂姿势。',
+      '不错。现在把自己放舒服一点，后厨不收松弛税。',
+      '牛逼。姿势可以散，刚才花过的时间不会散。'
+    ]
+  },
+  {
+    match: /手|键盘|握紧/,
+    texts: [
+      '这双手刚才挺给力。现在准许暂时变成两只闲手。',
+      '干得漂亮。键盘独处一会儿也能照顾好自己。',
+      '厉害。手头的活先停一下，手本身也需要被照顾。'
+    ]
+  },
+  {
+    match: /呼气|呼吸|下巴|眉头|发呆|空气|无事|先别急/,
+    texts: [
+      '可以，刚才那段算数。现在不用再额外使劲。',
+      '厉害。后厨已经把“必须有所作为”这道菜撤了。',
+      '这会儿空着也很好。你的上一段已经结账。'
+    ]
+  },
+  {
+    match: /水|热茶/,
+    texts: [
+      '这段做得可以。现在让杯子参与一下项目。',
+      '牛逼。喝慢一点，本店没有饮水竞速赛。',
+      '辛苦了。水负责补水，你不必负责配一段感想。'
+    ]
+  },
+  {
+    match: /土豆|米粒|蘑菇|香菜|咖啡|煎饼|勺子|冰块/,
+    texts: [
+      '餐饮界意见不一，但对你这一段统一给了好评。',
+      '牛逼。后厨正在用不具备鼓掌条件的食材为你鼓掌。',
+      '挺可以的。主厨说这句夸奖不需要另收服务费。'
+    ]
+  }
 ];
+
+const phasePraise = [
+  [
+    '开场这一段，已经稳稳下锅。',
+    '第一截路走完了，先给这一截结账。',
+    '灶已经点起来了，不必一上来就开最大火。',
+    '今天这桌正式开席，后厨记住你了。',
+    '开局有了。剩下的菜一道一道来。',
+    '现在还是前菜时间，慢慢吃。',
+    '第一张小票已打印，字是歪的，好评是真的。',
+    '刚起锅就有点样子了，可以。'
+  ],
+  [
+    '已经到中场了，锅盖替你点了个头。',
+    '这一单过了开场，后厨开始认真摆盘。',
+    '做到中间这段，不容易。给你加一份不存在的甜品。',
+    '中场检查：人还在，锅还热，可以。',
+    '已经走到这里了。盘子里的进度是你一点点攒的。',
+    '现在是主菜时间，后厨暂停胡说一秒：厉害。',
+    '中场不颁奖，直接夸：牛逼。',
+    '这锅已经有香味了。允许你先闻一下。'
+  ],
+  [
+    '到收尾这段了，不必突然加大火。',
+    '离出餐越来越近，收银机已经坐直了。',
+    '后厨开始找盘子了。你继续按自己的节奏。',
+    '这一单快齐了，最后几口也可以慢慢吃。',
+    '走到这儿，值得一句不拐弯的：牛逼。',
+    '接近出锅。请勿为了摆盘把自己炒焦。',
+    '尾声到了，主厨已经把掌声预热。',
+    '最后这段，做多少算多少。前面的都算数。'
+  ]
+];
+
 export class EncouragementPicker {
- constructor(random = Math.random) { this.random = random; this.last = [-1,-1,-1]; }
- next(prompt, elapsedMs, totalMs) {
-   const ratio = Math.max(0, Math.min(1, elapsedMs / totalMs));
-   const stage = ratio < 1/3 ? 0 : ratio < 2/3 ? 1 : 2;
-   const choices = phasePraise[stage].map((_,i)=>i).filter(i=>i!==this.last[stage]);
-   const selected = choices[Math.floor(this.random()*choices.length)]; this.last[stage]=selected;
-   const index = pools[prompt.type].indexOf(prompt.text);
-   return { stage, text: compliments[prompt.type][index] + ' ' + phasePraise[stage][selected] };
- }
+  constructor(random = Math.random) {
+    this.random = random;
+    this.recent = {
+      context: [],
+      stage0: [],
+      stage1: [],
+      stage2: []
+    };
+  }
+
+  pick(texts, key) {
+    const pool = [...new Set(texts.filter(Boolean))];
+    const history = this.recent[key];
+
+    let available = pool.filter(text => !history.includes(text));
+
+    // 小候选池全部用过后，至少避免紧接着重复上一句。
+    if (!available.length) {
+      available = pool.filter(text => text !== history.at(-1));
+    }
+
+    if (!available.length) available = pool;
+
+    const selected =
+      available[Math.floor(this.random() * available.length)];
+
+    history.push(selected);
+
+    const limit = key === 'context' ? 12 : 5;
+    if (history.length > limit) {
+      history.splice(0, history.length - limit);
+    }
+
+    return selected;
+  }
+
+  next(prompt, elapsedMs, totalMs) {
+    const ratio = Math.max(
+      0,
+      Math.min(1, elapsedMs / Math.max(1, totalMs))
+    );
+
+    const stage = ratio < 1 / 3 ? 0 : ratio < 2 / 3 ? 1 : 2;
+
+    const extra = extraPrompts[prompt.type].find(
+      item => item.text === prompt.text
+    );
+
+    const index = pools[prompt.type].indexOf(prompt.text);
+    const original = compliments[prompt.type][index];
+
+    const rule = contextRules.find(
+      item => item.match.test(prompt.text)
+    );
+
+    // 新提示优先使用自己配套的夸奖；
+    // 旧提示混合原句与符合关键词的其他表达。
+    const candidates = extra
+      ? extra.praise
+      : [
+          original,
+          ...(rule ? rule.texts : typePraise[prompt.type])
+        ];
+
+    const context = this.pick(candidates, 'context');
+    const progress = this.pick(phasePraise[stage], 'stage' + stage);
+
+    return {
+      stage,
+      text: context + ' ' + progress
+    };
+  }
 }

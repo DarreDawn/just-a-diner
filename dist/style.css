@@ -6,3 +6,25 @@
 .focusing .dish-display{margin:auto 0 20px}.focusing .orbit-art{width:340px;margin-top:28px}.focusing .dish-label h2{font-size:35px}.focusing .timer-bottom{margin-top:0;padding-top:22px}.focusing .session-meta{display:none}.focusing .timer-note{margin-top:5px;margin-bottom:12px}@media(max-width:650px){.focusing .orbit-art{width:285px}.focusing .dish-label h2{font-size:30px}.focusing .dish-display{margin:27px 0 28px}.focusing .timer-bottom{margin-top:auto}.focusing.timer-card{min-height:560px}}
 
 .scene-row{display:flex;align-items:center;gap:12px;margin:0 0 16px;font-size:11px}.scene-row label{white-space:nowrap}.scene-row select{min-width:0;flex:1;background:#fff9e9;border:1px solid #c9b695;border-radius:4px;padding:8px;color:var(--ink);font-size:11px;font-family:inherit}.preview-row{display:flex;align-items:center;gap:10px;margin-top:17px}.preview-row .secondary{padding:8px 10px;font-size:10px;white-space:nowrap}.preview-row span{font-size:9px;color:#987d60}.preview-row button:disabled{opacity:.45;cursor:default}.sound-credits{font-size:9px;line-height:1.8;color:#95795c;margin-top:13px}.sound-credits summary{cursor:pointer;width:fit-content}.sound-credits a{text-decoration:underline}.sound-credits ul{padding-left:16px}.sound-credits p{margin-bottom:6px}.sound-card select:focus-visible{outline:3px solid #ca922e;outline-offset:3px}
+
+.long-break.timer-card {
+  background: #f2ead4;
+}
+
+.long-break .orbit-art {
+  width: 190px;
+}
+
+.long-break .time-caption {
+  margin-top: 20px;
+}
+
+.long-break .total-time {
+  font-size: clamp(58px, 9vw, 82px);
+  letter-spacing: -4px;
+}
+
+.long-break .timer-note {
+  max-width: 340px;
+  line-height: 1.8;
+}
